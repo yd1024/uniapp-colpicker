@@ -125,7 +125,7 @@ export default {
         },
       ],
       checkValue: {
-        1: [12],
+        1: [],
         3: [31, 33],
       },
     };

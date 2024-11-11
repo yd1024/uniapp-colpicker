@@ -71,15 +71,20 @@
               v-for="item in filteredRange"
               :key="item[idKey]"
               :class="[
-                currentActiveItem === item[idKey]
-                  ? 'ydl-cp__item--selected'
-                  : '',
+                currentActiveItem === item[idKey] ? 'ydl-cp__item--active' : '',
                 Object.keys(selectValue)
                   .map((key) =>
                     typeof item[idKey] === 'number' ? Number(key) : key
                   )
+                  .map((key) =>
+                    Array.isArray(selectValue[key]) &&
+                    selectValue[key].length > 0
+                      ? key
+                      : false
+                  )
+                  .filter(Boolean)
                   .includes(item[idKey])
-                  ? 'ydl-cp__item--active'
+                  ? 'ydl-cp__item--selected'
                   : '',
               ]"
               @click="itemClick(item[idKey])"
@@ -101,7 +106,7 @@
               :class="[
                 selectValue[currentActiveItem] &&
                 selectValue[currentActiveItem].includes(item[idKey])
-                  ? 'ydl-cp__item--selected'
+                  ? 'ydl-cp__item--active ydl-cp__item--selected'
                   : '',
               ]"
               @click="selectItem(item[idKey])"
@@ -395,6 +400,11 @@ export default {
         // 取消左侧选中
         delete this.selectValue[this.currentActiveItem];
       }
+
+      // #ifdef VUE2
+      const copySelectValue = customCloneDeep(this.selectValue);
+      this.selectValue = copySelectValue;
+      // #endif
     },
   },
 };
@@ -405,6 +415,7 @@ export default {
   width: 750rpx;
   position: absolute;
   bottom: 0;
+  z-index: 999;
 }
 .ydl-cp__body {
   width: 750rpx;
@@ -485,14 +496,14 @@ export default {
       }
       &.ydl-cp__item--active {
         .ydl-cp__text {
-          .badge {
-            display: block;
-          }
+          color: #557ff7;
         }
       }
       &.ydl-cp__item--selected {
         .ydl-cp__text {
-          color: #557ff7;
+          .badge {
+            display: block;
+          }
         }
         .ydl-cp__check {
           display: block;
