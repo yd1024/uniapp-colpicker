@@ -1,7 +1,7 @@
 {
   "id": "ydl-col-picker",
   "displayName": "ydl-col-picker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "支持搜索功能的单选多选列选择器。",
   "keywords": [
     "ydl-col-picker",

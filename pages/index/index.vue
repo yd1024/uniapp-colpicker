@@ -1,6 +1,8 @@
 <template>
   <view class="content">
     <button type="default" @click="openPicker()">打开col-picker组件</button>
+	<!-- 测试滚动 -->
+	<view style="height: 200vh;"></view>
     <ydl-col-picker
       ref="colPicker"
       :range="dataList"
